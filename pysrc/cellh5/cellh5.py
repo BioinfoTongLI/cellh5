@@ -270,7 +270,7 @@ class CH5Const(object):
 class CH5PositionCoordinate(object):
     """CH5 Position Coordinates, plate, well, site"""
     def __init__(self, plate, well, site):
-        super(CH5PositionCoordinate, self).__init__()
+        super().__init__()
         self.site = site
         self.well = well
         self.plate = plate
@@ -286,7 +286,7 @@ class CH5PositionCoordinate(object):
 class CH5GroupCoordinate(object):
     """CH5 Coordinates, sample, plate, well, position, region"""
     def __init__(self, region, position, well, plate, sample="0"):
-        super(CH5GroupCoordinate, self).__init__()
+        super().__init__()
 
         self.region = region
         self.position = position
@@ -1024,7 +1024,7 @@ class CH5Position(object):
 class CH5CachedPosition(CH5Position):
     """Same as CH5Position using a cache for all inhereted methods"""
     def __init__(self, *args, **kwargs):
-        super(CH5CachedPosition, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     @memoize
     def get_prediction_probabilities(self, *args, **kwargs):

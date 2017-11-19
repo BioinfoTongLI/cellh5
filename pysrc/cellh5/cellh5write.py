@@ -25,8 +25,7 @@ from collections import OrderedDict
 from contextlib import contextmanager
 
 # from . 
-import cellh5
-from cellh5 import CH5PositionCoordinate, CH5Const
+from cellh5.cellh5 import CH5PositionCoordinate, CH5Const, CH5File, CH5Position
 
 import logging
 
@@ -77,20 +76,20 @@ class CH5ImageChannelDefinition(CH5PositionDescription):
                              ('voxel_size', 'float', 3),
                              ('color', "|S7")])
     def __init__(self):
-        super(CH5ImageChannelDefinition, self).__init__()
+        super().__init__()
 
 class CH5ImageRegionDefinition(CH5PositionDescription):
     fields = ["region_name", "channel_idx"]
     dtype = numpy.dtype([('region_name', '|S50'), ('channel_idx', 'i')])
     def __init__(self):
-        super(CH5ImageRegionDefinition, self).__init__()
+        super().__init__()
 
 
-class CH5FileWriter(cellh5.CH5File):
+class CH5FileWriter(CH5File):
 
     def __init__(self, filename, sister_file=None, plate_layout=None, mode="w",
                  cached=False):
-        super(CH5FileWriter, self).__init__(filename, mode, cached)
+        super().__init__(filename, mode, cached)
         self._f = self._file_handle
         self._init_basic_structure()
 
@@ -128,9 +127,9 @@ class CH5FileWriter(cellh5.CH5File):
 
         return CH5PositionWriter(coord, path_to_grp, self)
 
-class CH5PositionWriter(cellh5.CH5Position):
+class CH5PositionWriter(CH5Position):
     def __init__(self, coord, pos_grp, parent):
-        super(CH5PositionWriter, self).__init__(coord.plate, coord.well, coord.site, pos_grp, parent)
+        super().__init__(coord.plate, coord.well, coord.site, pos_grp, parent)
 
     def add_image(self, data=None, shape=None, dtype=None, order=CH5Const.DEFAULT_IMAGE_ORDER):
         if data is not None:
@@ -203,7 +202,7 @@ class CH5PositionWriterBase(object):
 
 class CH5ImageWriter(CH5PositionWriterBase):
     def __init__(self, dset, order, parent_pos):
-        super(CH5ImageWriter, self).__init__(parent_pos)
+        super().__init__(parent_pos)
         self.order = order
         self.dset = dset
 
@@ -240,7 +239,7 @@ class CH5ImageWriter(CH5PositionWriterBase):
 
 class CH5ObjectWriter(CH5PositionWriterBase):
     def __init__(self, name, obj_grp, parent_pos, compression="gzip"):
-        super(CH5ObjectWriter, self).__init__(parent_pos)
+        super().__init__(parent_pos)
         self.name = name
         self.obj_grp = obj_grp
         if self.name in list(self.obj_grp.keys()):
@@ -257,7 +256,7 @@ class CH5RegionWriter(CH5ObjectWriter):
     dtype = numpy.dtype([('time_idx', 'int32'),('obj_label_id', 'int32'),])
     init_size = 10000
     def __init__(self, name, obj_grp, parent_pos):
-        super(CH5RegionWriter, self).__init__(name, obj_grp, parent_pos)
+        super().__init__(name, obj_grp, parent_pos)
 
 
     def write(self, t, object_labels):
@@ -288,7 +287,7 @@ class CH5RegionWriter(CH5ObjectWriter):
 class CH5FeatureCompoundWriter(CH5PositionWriterBase):
     init_size = 1000
     def __init__(self, object_name, obj_grp, parent_pos):
-        super(CH5FeatureCompoundWriter, self).__init__(parent_pos)
+        super().__init__(parent_pos)
         self.obj_grp = obj_grp
         self.offset = 0
         self.object_name = object_name
@@ -322,7 +321,7 @@ class CH5FeatureCompoundWriter(CH5PositionWriterBase):
 class CH5BoundingBoxWriter(CH5FeatureCompoundWriter):
     dtype=numpy.dtype([('left', 'int32'),('right', 'int32'),('top', 'int32'),('bottom', 'int32'),])
     def __init__(self, object_name, obj_grp, parent_pos):
-        super(CH5BoundingBoxWriter, self).__init__(object_name, obj_grp, parent_pos)
+        super().__init__(object_name, obj_grp, parent_pos)
         self.name = "bounding_box"
         self.dset = self.obj_grp.create_dataset(self.name, shape=(self.init_size,), dtype=self.dtype, maxshape=(None,))
 
@@ -330,14 +329,14 @@ class CH5BoundingBoxWriter(CH5FeatureCompoundWriter):
 class CH5CenterWriter(CH5FeatureCompoundWriter):
     dtype=numpy.dtype([('x', 'int32'),('y', 'int32')])
     def __init__(self, object_name, obj_grp, parent_pos):
-        super(CH5CenterWriter, self).__init__(object_name, obj_grp, parent_pos)
+        super().__init__(object_name, obj_grp, parent_pos)
         self.name = "center"
         self.dset = self.obj_grp.create_dataset(self.name, shape=(self.init_size,), dtype=self.dtype, maxshape=(None,))
 
 class CH5FeatureMatrixWriter(CH5PositionWriterBase):
     init_size = 10000
     def __init__(self, feature_name, object_name, obj_grp, n_features, dtype, parent_pos, compression='gzip'):
-        super(CH5FeatureMatrixWriter, self).__init__(parent_pos)
+        super().__init__(parent_pos)
         self.name = feature_name
         self.obj_grp = obj_grp
 
@@ -379,7 +378,7 @@ class CH5FeatureMatrixWriter(CH5PositionWriterBase):
         self.dset.resize(self.offset, axis=0)
         super(CH5FeatureMatrixWriter, self).finalize()
 
-class CH5Validator(cellh5.CH5File):
+class CH5Validator(CH5File):
     pass
 
 class CH5MasterFile(h5py.File):
@@ -408,7 +407,7 @@ class CH5ImageWideObjectWriter(CH5ObjectWriter):
                          ('channel_idx', 'int32'),('zsclice_idx', 'int32')])
     init_size = 5
     def __init__(self, name, obj_grp, parent_pos):
-        super(CH5ImageWideObjectWriter, self).__init__(name, obj_grp, parent_pos)
+        super().__init__(name, obj_grp, parent_pos)
 
     def write(self, t, c, z):
         if 1 + self.offset > len(self.dset) :
