@@ -1,0 +1,40 @@
+package:
+  name: cellh5
+  version: "1.3.1"
+
+source:
+  path: ./
+  # git_rev: writerUpgrade
+  # git_url: https://github.com/BioinfoTongLI/cellh5.git
+
+requirements:
+  build:
+    - python
+    - setuptools
+  run:
+    - python
+    - hmm_wrapper
+    - numpy
+    - h5py
+    - pandas
+    - zlib
+    - matplotlib
+    - lxml
+
+build:
+  script: python setup.py install --single-version-externally-managed --record=record.txt
+test:
+  imports:
+    - cellh5
+    - cellh5write
+    
+outputs:
+  - name: hmm_wrapper
+    requirements:
+      - python
+      - setuptools
+
+about:
+  home: http://cellh5.org
+  license: LGPL
+  # license_file: LICENSE

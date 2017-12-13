@@ -34,8 +34,6 @@ from hmm_wrapper import HMMConstraint, HMMAgnosticEstimator, normalize, hmm
 from functools import reduce
 
 
-version_num = (1, 3, 1)
-version = '.'.join([str(n) for n in version_num])
 ICON_FILE = os.path.join(os.path.split(__file__)[0], "cellh5_icon.ico")
 
 GALLERY_SIZE = 60
@@ -411,8 +409,8 @@ class CH5Position(object):
         crack_list = []
         for ind in index:
             crack_str = self['feature'][object_]['crack_contour'][ind]
-            crack = numpy.asarray(zlib.decompress(\
-                             base64.b64decode(crack_str)).split(','), \
+            crack = numpy.asarray(zlib.decompress(
+                             base64.b64decode(crack_str)).split(','),
                              dtype=numpy.float32).reshape(-1, 2)
 
             if bb_corrected:

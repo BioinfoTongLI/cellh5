@@ -17,11 +17,8 @@ def test_empty_ch5(ch5name):
         assert fh.get_file_handle()[defbase+"feature"]
         assert fh.get_file_handle()[defbase+"image"]
         assert fh.get_file_handle()[defbase+"object"]
-@memoize
-def add(x,y):
-    return x+y
-add(3,4)
-add
+    CH5FileWriter()
+
 def test_tear_down():
     os.remove(ch5name)
     

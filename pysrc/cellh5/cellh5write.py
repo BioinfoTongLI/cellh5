@@ -25,7 +25,7 @@ from collections import OrderedDict
 from contextlib import contextmanager
 
 # from . 
-from cellh5.cellh5 import CH5PositionCoordinate, CH5Const, CH5File, CH5Position
+from cellh5 import CH5PositionCoordinate, CH5Const, CH5File, CH5Position
 
 import logging
 
