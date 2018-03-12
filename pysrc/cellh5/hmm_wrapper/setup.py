@@ -1,30 +1,19 @@
 """
-setup.py
-
-Setup script for cellh5.py
-
-This script installs only the library
-
->>>import cellh5
+Setup script for hmm_wrapper
 """
-
-__author__ = 'rudolf.hoefler@gmail.com'
-
-import sys
-sys.path.append('pysrc')
 
 from setuptools import setup
 
 version_num = (1, 3, 1)
 version = '.'.join([str(n) for n in version_num])
 
-setup(name='cellh5',
+setup(name='hmm_wrapper',
       version = version,
-      description = 'module for easy acces of cellh5 files',
-      author = 'Christoph Sommer, Rudolf Hoefler',
+      description = 'hmm_wrapper for cellh5.py',
+      author = 'Christoph Sommer, Rudolf Hoefler, Tong LI',
       author_email = 'christoph.sommer@imba.oeaw.ac.at, rudolf.hoefler@gmail.com',
       license = 'LGPL',
-      url = 'http://cellh5.org',
+      # url = 'http://cellh5.org',
       classifiers=[
             # How mature is this project? Common values are
             #   3 - Alpha
@@ -41,12 +30,6 @@ setup(name='cellh5',
             # that you indicate whether you support Python 2, Python 3 or both.
             'Programming Language :: Python :: 3.6',
       ],
-      package_dir = {'hmm_wrapper': 'pysrc/cellh5/hmm_wrapper', '': 'pysrc'},
-      py_modules = ['cellh5.cellh5', 'cellh5.cellh5write'],
-      packages=['hmm_wrapper'],
-      # If there are data files included in your packages that need to be
-      # installed, specify them here.  If using Python 2.6 or less, then these
-      # have to be included in MANIFEST.in as well.
       package_data={'hmm_wrapper': ['hmm_constraint.xsd']},
       # install_requires=['vigra'],
       )

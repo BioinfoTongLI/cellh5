@@ -34,8 +34,6 @@ from hmm_wrapper import HMMConstraint, HMMAgnosticEstimator, normalize, hmm
 from functools import reduce
 
 
-version_num = (1, 3, 1)
-version = '.'.join([str(n) for n in version_num])
 ICON_FILE = os.path.join(os.path.split(__file__)[0], "cellh5_icon.ico")
 
 GALLERY_SIZE = 60
@@ -270,7 +268,7 @@ class CH5Const(object):
 class CH5PositionCoordinate(object):
     """CH5 Position Coordinates, plate, well, site"""
     def __init__(self, plate, well, site):
-        super(CH5PositionCoordinate, self).__init__()
+        super().__init__()
         self.site = site
         self.well = well
         self.plate = plate
@@ -286,7 +284,7 @@ class CH5PositionCoordinate(object):
 class CH5GroupCoordinate(object):
     """CH5 Coordinates, sample, plate, well, position, region"""
     def __init__(self, region, position, well, plate, sample="0"):
-        super(CH5GroupCoordinate, self).__init__()
+        super().__init__()
 
         self.region = region
         self.position = position
@@ -411,8 +409,8 @@ class CH5Position(object):
         crack_list = []
         for ind in index:
             crack_str = self['feature'][object_]['crack_contour'][ind]
-            crack = numpy.asarray(zlib.decompress(\
-                             base64.b64decode(crack_str)).split(','), \
+            crack = numpy.asarray(zlib.decompress(
+                             base64.b64decode(crack_str)).split(','),
                              dtype=numpy.float32).reshape(-1, 2)
 
             if bb_corrected:
@@ -1024,7 +1022,7 @@ class CH5Position(object):
 class CH5CachedPosition(CH5Position):
     """Same as CH5Position using a cache for all inhereted methods"""
     def __init__(self, *args, **kwargs):
-        super(CH5CachedPosition, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     @memoize
     def get_prediction_probabilities(self, *args, **kwargs):

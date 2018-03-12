@@ -8,10 +8,7 @@ This script installs only the library
 >>>import cellh5
 """
 
-__author__ = 'rudolf.hoefler@gmail.com'
-
-import sys
-sys.path.append('pysrc')
+__author__ = 'tongli.bioinfo@gmail.com'
 
 from setuptools import setup
 
@@ -41,8 +38,8 @@ setup(name='cellh5',
             # that you indicate whether you support Python 2, Python 3 or both.
             'Programming Language :: Python :: 3.6',
       ],
-      package_dir = {'hmm_wrapper': 'pysrc/cellh5/hmm_wrapper', '': 'pysrc'},
-      py_modules = ['cellh5.cellh5', 'cellh5.cellh5write'],
+      package_dir = {'hmm_wrapper': 'hmm_wrapper'},
+      py_modules = ['cellh5', 'cellh5write'],
       packages=['hmm_wrapper'],
       # If there are data files included in your packages that need to be
       # installed, specify them here.  If using Python 2.6 or less, then these
